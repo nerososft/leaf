@@ -1,0 +1,26 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    tools:context=".activity.MainActivity">
+    <LinearLayout
+        android:id="@+id/splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:padding="0dp"
+        android:background="@drawable/splash">
+
+        <Button
+            android:id="@+id/jump"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:text="跳过"
+            android:textColor="#fff"/>
+    </LinearLayout>
+    
+</RelativeLayout>

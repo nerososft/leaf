@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="短信验证码注册/登录"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="200dp">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/greenleaf"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="0dp"
+        android:padding="15dp"
+        android:textAlignment="center">
+        <EditText
+            android:id="@+id/reg_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#fff"
+            android:paddingLeft="10dp"
+            android:hint="请输入11位手机号码"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:padding="0dp"
+            android:orientation="horizontal"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/reg_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:hint="验证码"/>
+            <Button
+                android:id="@+id/reg_getcode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="获取验证码"
+                android:background="#1296db"
+                android:textColor="#fff"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reg"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="注册/登录"
+            android:background="#1296db"
+            android:textColor="#fff"/>
+        <TextView
+            android:id="@+id/log"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="已有账号,点击登录"
+            android:textColor="#1296db"/>
+
+    </LinearLayout>
+
+</LinearLayout>

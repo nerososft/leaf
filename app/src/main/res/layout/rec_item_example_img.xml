@@ -1,0 +1,12 @@
+<LinearLayout android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_marginTop="5dp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/rec_example_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="5dp"
+        android:src="@drawable/greenleaf"/>
+</LinearLayout>
