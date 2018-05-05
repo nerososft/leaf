@@ -27,6 +27,7 @@ import nero.intel.com.leaf.entity.Reg;
 import nero.intel.com.leaf.entity.Result;
 import nero.intel.com.leaf.entity.ShareToDating;
 import nero.intel.com.leaf.fragment.GroundFragment;
+import nero.intel.com.leaf.fragment.HistroyFragment;
 import nero.intel.com.leaf.fragment.LeafFragment;
 import nero.intel.com.leaf.fragment.MySelfFragment;
 import nero.intel.com.leaf.fragment.leaf.BoswerFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     RecognizeFragment recognizeFragment;
     BoswerFragment boswerFragment;
+    HistroyFragment histroyFragment;
 
     LinearLayout bottomButtonLeaf;
     LinearLayout bottomButtonGround;
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -266,6 +269,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         fragmentTransaction.replace(R.id.fragment_container,groundFragment);
                         fragmentTransaction.commit();
                         break;
+                    case "histroy":
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container,histroyFragment);
+                        fragmentTransaction.commit();
+                        break;
+                    case "me":
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container,mySelfFragment);
+                        fragmentTransaction.commit();
+                        break;
                     default:
                         break;
 
@@ -277,6 +290,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boswerFragment.setActivityHandler(activityHandler);
         shareFragment.setActivityHandler(activityHandler);
         groundFragment.setActivityHandler(activityHandler);
+        mySelfFragment.setActivityHandler(activityHandler);
+        histroyFragment.setActivityHandler(activityHandler);
+
     }
 
 
@@ -290,13 +306,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomButtonSelfText.setTextColor(bottom_text_color);
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initFragment() {
-        leafFragment  = new LeafFragment();
-        groundFragment = new GroundFragment();
-        mySelfFragment = new MySelfFragment();
-        recognizeFragment = new RecognizeFragment();
-        boswerFragment = new BoswerFragment();
-        shareFragment = new ShareFragment();
+        leafFragment  = new LeafFragment(getApplicationContext());
+        groundFragment = new GroundFragment(getApplicationContext());
+        mySelfFragment = new MySelfFragment(getApplicationContext());
+        recognizeFragment = new RecognizeFragment(getApplicationContext());
+        boswerFragment = new BoswerFragment(getApplicationContext());
+        shareFragment = new ShareFragment(getApplicationContext());
+        histroyFragment = new HistroyFragment(getApplicationContext());
     }
 
     @Override

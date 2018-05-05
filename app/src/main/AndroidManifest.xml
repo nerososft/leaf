@@ -28,8 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.RegisterActivity"></activity>
-        <activity android:name=".activity.LoginAvtivity"></activity>
+        <activity android:name=".activity.RegisterActivity"></activity>s
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

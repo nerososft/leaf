@@ -20,17 +20,21 @@
             android:layout_height="200dp">
             <LinearLayout
                 android:layout_marginTop="50dp"
-                android:layout_marginLeft="-30dp"
+                android:layout_marginLeft="0dp"
+                android:layout_gravity="left|center_vertical"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="121STUDIO"
                     android:textSize="25dp"
                     android:textColor="#fff"/>
                 <TextView
+                    android:id="@+id/user_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15122372903"
@@ -38,11 +42,13 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/user_avatar"
+                android:layout_gravity="right|center_vertical"
                 android:layout_marginTop="50dp"
-                android:layout_marginLeft="100dp"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/logo"/>
+                android:layout_marginLeft="0dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo"/>
 
 
         </LinearLayout>
@@ -56,31 +62,8 @@
         android:orientation="vertical"
         android:paddingTop="5dp"
         android:textAlignment="center">
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:orientation="horizontal">-->
-            <!--<ImageView-->
-                <!--android:padding="11dp"-->
-                <!--android:layout_width="50dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:src="@drawable/leaf_gray"/>-->
-            <!--<TextView-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:text="我的树木"/>-->
-
-        <!--</LinearLayout>-->
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0.5dp"-->
-            <!--android:layout_marginLeft="70dp"-->
-            <!--android:background="#e3e3e3"-->
-            <!--/>-->
         <LinearLayout
+            android:id="@+id/histroy"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
@@ -98,29 +81,6 @@
                 android:text="识别历史"/>
 
         </LinearLayout>
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0.5dp"-->
-            <!--android:layout_marginLeft="70dp"-->
-            <!--android:background="#e3e3e3"-->
-            <!--/>-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:paddingLeft="10dp">-->
-            <!--<ImageView-->
-                <!--android:padding="7dp"-->
-                <!--android:layout_width="50dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:src="@drawable/setting"/>-->
-            <!--<TextView-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:text="修改资料"/>-->
-
-        <!--</LinearLayout>-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -128,6 +88,7 @@
             android:background="#e3e3e3"
             />
         <LinearLayout
+            android:id="@+id/about_bt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingLeft="10dp">
@@ -137,6 +98,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/about"/>
             <TextView
+                android:id="@+id/about_tx"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,10 +1,10 @@
 package nero.intel.com.leaf.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,18 +23,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import nero.intel.com.leaf.R;
 import nero.intel.com.leaf.adapter.DatingListAdapter;
-import nero.intel.com.leaf.adapter.RecognizeImgListAdapter;
-import nero.intel.com.leaf.adapter.RecognizeListAdapter;
+import nero.intel.com.leaf.adapter.HistoryListAdapter;
 import nero.intel.com.leaf.entity.DatingItem;
 import nero.intel.com.leaf.entity.DatingList;
+import nero.intel.com.leaf.entity.HistoryList;
+import nero.intel.com.leaf.entity.HistroyItem;
 import nero.intel.com.leaf.entity.Result;
-import nero.intel.com.leaf.entity.ShareToDating;
 import nero.intel.com.leaf.model.DatingModel;
+import nero.intel.com.leaf.model.HistoryModel;
+import nero.intel.com.leaf.model.ImageModel;
 
 /**
  * Created by ny on 2018/3/6.
@@ -41,22 +43,26 @@ import nero.intel.com.leaf.model.DatingModel;
 
 @SuppressLint("ValidFragment")
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class GroundFragment extends Fragment implements View.OnScrollChangeListener {
+public class HistroyFragment extends Fragment implements View.OnScrollChangeListener, View.OnClickListener {
 
 
     private Handler activityHandler;
     private Handler mHandler;
 
-    private DatingModel datingModel;
-    private Context context;
+    private HistoryModel datingModel;
 
 
-    Result<DatingList> datingListResult;
+    Result<HistoryList> datingListResult;
 
-    List<DatingItem> datingItemList;
+    List<HistroyItem> datingItemList;
 
     ListView recList;
-    DatingListAdapter datingListAdapter;
+    HistoryListAdapter datingListAdapter;
+
+
+    private ImageView imageView;
+
+    private Context context;
 
     LinearLayout loadmore;
     ScrollView maincon;
@@ -65,8 +71,11 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
     Integer count = 8;
     Boolean isGet = false;
 
+    String uuid;
+    String token;
+
     @SuppressLint("ValidFragment")
-    public GroundFragment(Context context) {
+    public HistroyFragment(Context context) {
         this.context = context;
     }
 
@@ -79,7 +88,7 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ground_fragment, container, false);
+        View view = inflater.inflate(R.layout.histroy_fragment, container, false);
 
         init_view(view);
         return view;
@@ -91,17 +100,23 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
         loadmore = view.findViewById(R.id.load_more);
         loadmore_text = view.findViewById(R.id.load_more_text);
 
+        imageView = view.findViewById(R.id.fanhui_me);
+        imageView.setOnClickListener(this);
+
         maincon = view.findViewById(R.id.main_con);
         maincon.setOnScrollChangeListener(this);
 
         datingItemList = new ArrayList<>();
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        uuid = sharedPreferences.getString("uuid", "");
+        token = sharedPreferences.getString("token", "");
 
-        datingModel = new DatingModel();
-        datingModel.listDaTing(new Integer(count).toString(), new Integer(page).toString(),"refresh");
+        datingModel = new HistoryModel();
+        datingModel.listHistory(uuid,token,count,page,"refresh");
 
         recList = view.findViewById(R.id.share_list);
-        datingListAdapter = new DatingListAdapter(getActivity());
+        datingListAdapter = new HistoryListAdapter(getActivity());
         recList.setAdapter(datingListAdapter);
         //setListViewHeightBasedOnChildren(recList);
         set_handler();
@@ -140,14 +155,14 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
                         Toast.makeText(context, "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case "dt_list":
-                        datingListResult = (Result<DatingList>) msg.getData().getSerializable("dt_list");
+                    case "hs_list":
+                        datingListResult = (Result<HistoryList>) msg.getData().getSerializable("hs_list");
                         System.out.println(datingListResult.toString());
                         if (datingListResult.getCode() != 0) {
                             Toast.makeText(context, datingListResult.getMsg(), Toast.LENGTH_SHORT).show();
                         } else {
                             if(msg.getData().getString("action").equals("refresh")) {
-                                List<DatingItem> list = (List<DatingItem>) ((Result<DatingList>) msg.getData().getSerializable("dt_list")).getData().getResult();
+                                List<HistroyItem> list =  ((Result<HistoryList>) msg.getData().getSerializable("hs_list")).getData().getResult();
                                 datingListAdapter.setData(list);
                                 datingListAdapter.notifyDataSetChanged();
                                 loadmore_text.setText("下拉刷新···");
@@ -161,7 +176,7 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
                                     }
                                 });
                             }else if(msg.getData().getString("action").equals("nextpage")){
-                                List<DatingItem> list = (List<DatingItem>) ((Result<DatingList>) msg.getData().getSerializable("dt_list")).getData().getResult();
+                                List<HistroyItem> list =((Result<HistoryList>) msg.getData().getSerializable("hs_list")).getData().getResult();
                                 datingListAdapter.addData(list);
                                 datingListAdapter.notifyDataSetChanged();
                                 isGet = true;
@@ -198,11 +213,11 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
         this.activityHandler = activityHandler;
     }
 
-    public Result<DatingList> getDatingListResult() {
+    public Result<HistoryList> getDatingListResult() {
         return datingListResult;
     }
 
-    public void setDatingListResult(Result<DatingList> datingListResult) {
+    public void setDatingListResult(Result<HistoryList> datingListResult) {
         this.datingListResult = datingListResult;
     }
 
@@ -214,7 +229,7 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
                     if(isGet) {
                         loadmore_text.setText("加载中···");
                         page = 1;
-                        datingModel.listDaTing(new Integer(count).toString(), new Integer(1).toString(),"refresh");
+                        datingModel.listHistory(uuid,token,count,page,"refresh");
                         isGet = false;
                     }
                 }
@@ -223,7 +238,7 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
                         == maincon.getScrollY()-48){
                     if(isGet) {
                         page++;
-                        datingModel.listDaTing(new Integer(count).toString(), new Integer(page).toString(), "nextpage");
+                        datingModel.listHistory(uuid,token,count,page, "nextpage");
                         isGet = false;
                     }
                 }
@@ -249,4 +264,18 @@ public class GroundFragment extends Fragment implements View.OnScrollChangeListe
         page = 1;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fanhui_me:
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("page","me");
+                message.setData(bundle);
+                activityHandler.sendMessage(message);
+                break;
+            default:
+                break;
+        }
+    }
 }

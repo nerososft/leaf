@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#fff"
+            android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:hint="密码"/>
 

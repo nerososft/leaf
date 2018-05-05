@@ -1,5 +1,6 @@
 package nero.intel.com.leaf.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
@@ -53,6 +54,7 @@ import static android.content.ContentValues.TAG;
  * Created by ny on 2018/3/6.
  */
 
+@SuppressLint("ValidFragment")
 public class LeafFragment extends Fragment implements View.OnClickListener {
 
     private Camera mCamera;
@@ -62,6 +64,8 @@ public class LeafFragment extends Fragment implements View.OnClickListener {
 
     private Handler mHandler;
     private Handler activityHandler;
+
+    private Context context;
 
 
     ImageView photo;
@@ -73,6 +77,11 @@ public class LeafFragment extends Fragment implements View.OnClickListener {
 
     Result<ImageUpload> uploadImageResult;
     Result<ImageShiBie> shibieImageResult;
+
+    @SuppressLint("ValidFragment")
+    public LeafFragment(Context context) {
+        this.context = context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,11 +96,13 @@ public class LeafFragment extends Fragment implements View.OnClickListener {
         mCamera = getCameraInstance();
         qOpened = (mCamera != null);
         DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int x = metrics.widthPixels;//获取了屏幕的宽度
+        if(getActivity().getWindowManager()!=null) {
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int x = metrics.widthPixels;//获取了屏幕的宽度
             mPreview = new CameraPreview(getActivity().getBaseContext(), mCamera, x);
             preview = view.findViewById(R.id.camera_preview);
             preview.addView(mPreview);
+        }
         return qOpened;
     }
 
@@ -120,7 +131,7 @@ public class LeafFragment extends Fragment implements View.OnClickListener {
             public void handleMessage(Message msg) {
                 switch (msg.getData().getString("type")) {
                     case "error":
-                        Toast.makeText(getActivity(), "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
                         break;
                     case "uploadimage":
                         uploadImageResult = (Result<ImageUpload>) msg.getData().getSerializable("uploadimage");
@@ -139,7 +150,7 @@ public class LeafFragment extends Fragment implements View.OnClickListener {
                             photo.setEnabled(true);
                             safeCameraOpenInView(view);
                         } else {
-                            Toast.makeText(getActivity(), shibieImageResult.getMsg(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, shibieImageResult.getMsg(), Toast.LENGTH_SHORT).show();
                             Message message = new Message();
                             Bundle bundle = new Bundle();
                             bundle.putString("page", "shibie_success");

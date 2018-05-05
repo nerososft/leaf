@@ -3,6 +3,7 @@ package nero.intel.com.leaf.fragment.leaf;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +32,7 @@ import static nero.intel.com.leaf.utils.TGJson.fromJson;
  * Created by ny on 2018/3/8.
  */
 
+@SuppressLint("ValidFragment")
 public class ShareFragment extends Fragment implements View.OnClickListener {
 
     private Handler activityHandler;
@@ -53,6 +55,12 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
 
     private ImageModel imageModel;
     private DatingModel datingModel;
+
+    Context context;
+    @SuppressLint("ValidFragment")
+    public ShareFragment(Context applicationContext) {
+        context = applicationContext;
+    }
 
 
     @Override
@@ -102,7 +110,7 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
             public void handleMessage(Message msg) {
                 switch (msg.getData().getString("type")) {
                     case "error":
-                        Toast.makeText(getActivity(), "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
                         break;
                     case "getimage":
                         byte[] getimage = msg.getData().getByteArray("getimage");
@@ -118,7 +126,7 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
                         imageUploadResult = (Result<ShareToDating>) msg.getData().getSerializable("share_dt");
                         System.out.println(imageUploadResult.toString());
                         if (imageUploadResult.getCode() != 0) {
-                            Toast.makeText(getActivity(), imageUploadResult.getMsg(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, imageUploadResult.getMsg(), Toast.LENGTH_SHORT).show();
                         } else {
                             Message message2 = new Message();
                             Bundle bundle2 = new Bundle();

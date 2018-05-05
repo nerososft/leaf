@@ -1,6 +1,8 @@
 package nero.intel.com.leaf.fragment.leaf;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import nero.intel.com.leaf.view.HorizontalListView;
  * Created by ny on 2018/3/7.
  */
 
+@SuppressLint("ValidFragment")
 public class RecognizeFragment extends Fragment implements View.OnClickListener {
 
     private Handler activityHandler;
@@ -58,6 +61,12 @@ public class RecognizeFragment extends Fragment implements View.OnClickListener 
 
     RecognizeListAdapter recognizeListAdapter;
     RecognizeImgListAdapter recognizeImgListAdapter;
+
+    Context context;
+    @SuppressLint("ValidFragment")
+    public RecognizeFragment(Context applicationContext) {
+        context = applicationContext;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,7 +157,7 @@ public class RecognizeFragment extends Fragment implements View.OnClickListener 
             public void handleMessage(Message msg) {
                 switch (msg.getData().getString("type")) {
                     case "error":
-                        Toast.makeText(getActivity(), "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "网络似乎出问题了...", Toast.LENGTH_SHORT).show();
                         break;
                     case "getimage":
                         getimage = msg.getData().getByteArray("getimage");

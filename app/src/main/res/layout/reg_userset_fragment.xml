@@ -48,6 +48,7 @@
             android:layout_height="50dp"
             android:background="#fff"
             android:paddingLeft="10dp"
+            android:inputType="textPassword"
             android:hint="密码"/>
 
 

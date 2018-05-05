@@ -10,8 +10,8 @@ public class ApiClient extends AsyncHttpClient {
 
 
 
-    //private final String HOST = "http://leaves.beiyang1895.com:8000/leaves/";
-    private final String HOST = "http://172.24.73.72:8000/leaves/";
+    private final String HOST = "http://leaves.beiyang1895.com:8000/leaves/";
+    //private final String HOST = "http://172.24.73.72:8000/leaves/";
     //获取短信验证码，用于登录（注册）
     //http://leaves.beiyang1895.com/leaves/auth/smscode/[phone]{11}/
     public String getSms(String phone){
@@ -127,6 +127,10 @@ public class ApiClient extends AsyncHttpClient {
     }
 
     //获取用户识别历史：
+    //    http://leaves.beiyang1895.com/leaves/auth/get/history/[uuid]{32}/[token]{32}/[count]/[page]/
+    public String listHistroy(String uuid,String token,Integer count,Integer page){
+        return HOST+"auth/get/history/"+uuid+"/"+token+"/"+count+"/"+page+"/";
+    }
 
     public ApiClient() {
 

@@ -1,6 +1,8 @@
 package nero.intel.com.leaf.fragment.leaf;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import nero.intel.com.leaf.model.ImageModel;
  * Created by ny on 2018/3/7.
  */
 
+@SuppressLint("ValidFragment")
 public class BoswerFragment extends Fragment implements View.OnClickListener {
 
     private Handler activityHandler;
@@ -33,6 +36,11 @@ public class BoswerFragment extends Fragment implements View.OnClickListener {
     WebView webView;
 
     String url;
+    Context context;
+    @SuppressLint("ValidFragment")
+    public BoswerFragment(Context applicationContext) {
+        context = applicationContext;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
